@@ -20,13 +20,15 @@ This project automates the process of searching for **Senior Quality Analyst** j
 ---
 
 ## 📂 Project Structure
+```text
 .
-├── job_search.py # Main Python script
-├── requirements.txt # Python dependencies
+├── job_search.py           # Main Python script
+├── requirements.txt        # Python dependencies
 ├── .github/
-│ └── workflows/
-│ └── job_search.yml # GitHub Actions workflow file
-└── README.md # Project documentation
+│   └── workflows/
+│       └── job_search.yml  # GitHub Actions workflow file
+└── README.md               # Project documentation
+
 
 ------------------------------------------------
 
