@@ -2,10 +2,8 @@ name: Job Search Every 6 Hours
 
 on:
   schedule:
-    # Runs every 6 hours at 00:00, 06:00, 12:00, and 18:00 UTC
-    # Which is 5:30 AM, 11:30 AM, 5:30 PM, and 11:30 PM IST
     - cron: "0 */6 * * *"
-  workflow_dispatch: # allows manual run
+  workflow_dispatch:
 
 jobs:
   run-job-search:
@@ -23,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run script
+      - name: Run daily job search script
         env:
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
@@ -32,3 +30,11 @@ jobs:
           RAPIDAPI_HOST: ${{ secrets.RAPIDAPI_HOST }}
           RAPIDAPI_URL: ${{ secrets.RAPIDAPI_URL }}
         run: python daily_job_search.py
+
+      - name: Run daily interview questions script
+        env:
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python daily_interview_questions.py

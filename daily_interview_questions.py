@@ -5,25 +5,26 @@ from datetime import datetime
 from dotenv import load_dotenv
 import os
 
+# Load environment variables from .env file
+load_dotenv()
+
 # Email config
 EMAIL_SENDER = os.getenv('EMAIL_SENDER')
-EMAIL_PASSWORD =os.getenv('EMAIL_PASSWORD')
+EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_RECEIVER = os.getenv('EMAIL_RECEIVER')
 SMTP_SERVER = 'smtp.gmail.com'
-SMTP_PORT = 465
+SMTP_PORT = 465  # SSL port
 
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
 # Mock Gemini API call - replace with actual Google Gemini API call
 def generate_qa_from_gemini():
-    # Prompt to generate 10 QA pairs for senior QA role
     prompt = (
         "Generate 10 interview questions and detailed answers for a Senior Quality Analyst "
         "with 10 years of experience in manual and automation testing. Format the output clearly "
         "with Q1:, A1:, Q2:, A2:, etc."
     )
     
-    # MOCKED response (replace with your actual Gemini API interaction)
     mocked_response = """
 Q1: What is your approach to designing test cases?
 A1: I analyze requirements thoroughly and create test cases that cover positive, negative, boundary, and edge cases to ensure comprehensive coverage.
@@ -64,8 +65,8 @@ def send_email(subject, body):
     msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain'))
 
-    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-        server.starttls()
+    # Use SMTP_SSL because you use port 465
+    with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
         server.login(EMAIL_SENDER, EMAIL_PASSWORD)
         server.send_message(msg)
 
