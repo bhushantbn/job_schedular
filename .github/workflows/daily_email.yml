@@ -1,4 +1,4 @@
-name: Job Search Every 6 Hours
+name: Daily Automation Python Email Schedular Every 6 Hours
 
 on:
   schedule:
