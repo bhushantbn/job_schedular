@@ -100,12 +100,6 @@ You can also manually trigger the workflow from the "Actions" tab in your GitHub
 
 ---
 
-## 🤝 Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
-
----
-
 ## 📖 Acknowledgments
 
 - [RapidAPI](https://rapidapi.com/)
