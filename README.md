@@ -1,63 +1,47 @@
-# Selenium Python Project
+# Daily Senior Quality Analyst Job Search (Ahmedabad)
 
-This project uses Selenium with Python to automate web browser interactions. It is designed to perform automated testing or web scraping tasks efficiently.
+This project automates the process of searching for **Senior Quality Analyst** jobs at top companies in **Ahmedabad** and sends the results to your email daily at **12 noon IST** using GitHub Actions.
 
-## Features
-- Automates browser interactions using Selenium WebDriver.
-- Supports multiple browsers (e.g., Chrome, Firefox).
-- Modular and reusable code structure.
-- Easy-to-configure environment.
+---
 
-## Prerequisites
-Before running the project, ensure you have the following installed:
-- Python 3.7 or higher
-- pip (Python package manager)
-- Google Chrome or another supported browser
-- ChromeDriver or the corresponding WebDriver for your browser
+## 📌 Features
+- Automatically runs every day at 12 noon IST.
+- Searches for latest job postings using RapidAPI.
+- Sends results directly to your email.
+- Fully serverless — runs on GitHub Actions (no need to keep PC on).
 
-## Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/SeleniumPython.git
-   cd SeleniumPython
-   ```
+---
 
-2. Create a virtual environment (optional but recommended):
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+## 🛠️ Requirements
+- Python 3.9+ (GitHub Actions uses latest Python by default)
+- A **Gmail account** (with an App Password for SMTP)
+- A **RapidAPI key** for job search
 
-3. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-4. Download the appropriate WebDriver for your browser and ensure it is in your system's PATH.
+## 📂 Project Structure
+.
+├── job_search.py # Main Python script
+├── requirements.txt # Python dependencies
+├── .github/
+│ └── workflows/
+│ └── job_search.yml # GitHub Actions workflow file
+└── README.md # Project documentation
 
-## Usage
-1. Update the configuration file (if applicable) with the required settings, such as URLs or credentials.
+------------------------------------------------
 
-2. Run the script:
-   ```bash
-   python daily_job_search.py
-   ```
+## ⚙️ Setup
 
-3. Follow the output in the terminal for progress and results.
-
-## Project Structure
+### 1. Fork or Clone the Repository
+```bash
+git clone https://github.com/your-username/daily-job-search.git
+cd daily-job-search
 ```
-SeleniumPython/
-│
-├── daily_job_search.py    # Script for daily job search automation
-├── requirements.txt       # Python dependencies
-```
+## 2. Install Dependencies (for local testing)
 
-## Contributing
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
+``` pip install -r requirements.txt ```
 
-## License
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+### 3. Create .env File (Optional for Local Run)
 
-## Acknowledgments
-- [Python Official Website](https://www.python.org/)
+
+
