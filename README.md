@@ -8,7 +8,6 @@ This repository contains a collection of Python scripts for various automation t
 
 - **Daily Job Search**: Automatically searches for jobs on RapidAPI based on a predefined list of roles and locations, and sends a summary email.
 - **Daily Interview Questions**: Generates a set of interview questions and answers for a Senior QA role using the Gemini API and sends them to your email.
-- **Selenium Web Automation**: A collection of scripts demonstrating various web automation tasks using the Selenium framework.
 - **GitHub Actions Integration**: The job search and interview question scripts are configured to run on a schedule using GitHub Actions.
 
 ---
@@ -42,8 +41,8 @@ This repository contains a collection of Python scripts for various automation t
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/SeleniumPython.git
-cd SeleniumPython
+git clone https://github.com/your-username/your_directory_name.git
+cd Your Directory Name
 ```
 
 ### 2. Install Dependencies
@@ -117,4 +116,3 @@ This project is licensed under the MIT License.
 
 - [RapidAPI](https://rapidapi.com/)
 - [Google Gemini](https://gemini.google.com/)
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
