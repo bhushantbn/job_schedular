@@ -29,7 +29,7 @@ This project automates the process of searching for **Senior Quality Analyst** j
 │       └── job_search.yml  # GitHub Actions workflow file
 └── README.md               # Project documentation
 
-
+```
 ------------------------------------------------
 
 ## ⚙️ Setup
