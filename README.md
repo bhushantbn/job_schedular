@@ -1,90 +1,120 @@
-# Daily Job Search By Location
+# Selenium Python Automation Scripts
 
-This project automates the process of searching for **Senior Quality Analyst** jobs at top companies in **Location** and sends the results to your email daily using GitHub Actions.
+This repository contains a collection of Python scripts for various automation tasks, including daily job searches, interview question generation, and web browser interactions using Selenium.
 
 ---
 
 ## 📌 Features
-- Automatically runs every day at scheduled intervals.
-- Searches for the latest job postings using RapidAPI.
-- Sends results directly to your email.
-- Fully serverless — runs on GitHub Actions (no need to keep PC on).
 
----
-
-## 🛠️ Requirements
-- Python 3.9+ (GitHub Actions uses the latest Python by default).
-- A **Gmail account** (with an App Password for SMTP).
-- A **RapidAPI key** for job search.
+- **Daily Job Search**: Automatically searches for jobs on RapidAPI based on a predefined list of roles and locations, and sends a summary email.
+- **Daily Interview Questions**: Generates a set of interview questions and answers for a Senior QA role using the Gemini API and sends them to your email.
+- **Selenium Web Automation**: A collection of scripts demonstrating various web automation tasks using the Selenium framework.
+- **GitHub Actions Integration**: The job search and interview question scripts are configured to run on a schedule using GitHub Actions.
 
 ---
 
 ## 📂 Project Structure
+
 ```text
 .
-├── daily_job_search.py     # Main Python script for job search automation
-├── requirements.txt        # Python dependencies
 ├── .github/
 │   └── workflows/
-│       └── daily_job_search.yml  # GitHub Actions workflow file
-└── README.md               # Project documentation
+│       └── job_search.yml
+├── daily_job_search.py
+├── daily_interview_questions.py
+├── requirements.txt
+├── README.md
+├── ... (other selenium scripts)
 ```
 
 ---
 
-## ⚙️ Setup
+## ⚙️ Requirements
 
-### 1. Fork or Clone the Repository
+- Python 3.x
+- A Gmail account (with an App Password for SMTP).
+- A RapidAPI key for the job search script.
+- A Google Gemini API key for the interview questions script.
+
+---
+
+## 🚀 Setup
+
+### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/daily-job-search.git
-cd daily-job-search
+git clone https://github.com/your-username/SeleniumPython.git
+cd SeleniumPython
 ```
 
-### 2. Install Dependencies (for local testing)
+### 2. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Create `.env` File (Optional for Local Run)
-Create a `.env` file in the root directory and add the following:
+### 3. Create `.env` File
+Create a `.env` file in the root directory and add the following secrets:
+
 ```env
+# For daily_job_search.py
 RAPIDAPI_KEY=your_rapidapi_key
-SMTP_EMAIL=your_email@gmail.com
-SMTP_PASSWORD=your_app_password
+RAPIDAPI_HOST=jsearch.p.rapidapi.com
+RAPIDAPI_URL=https://jsearch.p.rapidapi.com/search
+
+# For daily_interview_questions.py
+GEMINI_API_KEY=your_gemini_api_key
+
+# For both scripts
+EMAIL_SENDER=your_email@gmail.com
+EMAIL_PASSWORD=your_app_password
+EMAIL_RECEIVER=your_email@gmail.com
 ```
 
 ---
 
-## 🚀 Usage
+## Usage
 
-### Run Locally
-To test the script locally, execute:
+### Run Scripts Locally
+
+To run the scripts locally, use the following commands:
+
 ```bash
+# For daily job search
 python daily_job_search.py
+
+# For daily interview questions
+python daily_interview_questions.py
 ```
 
-### Run on GitHub Actions
-The script is configured to run automatically using the `daily_job_search.yml` workflow file. Ensure you set the required secrets in your GitHub repository:
+### Run with GitHub Actions
+
+The `daily_job_search.py` script is configured to run every 6 hours via GitHub Actions. To enable this, you need to add the following secrets to your GitHub repository settings:
+
+- `EMAIL_SENDER`
+- `EMAIL_PASSWORD`
+- `EMAIL_RECEIVER`
 - `RAPIDAPI_KEY`
-- `SMTP_EMAIL`
-- `SMTP_PASSWORD`
+- `RAPIDAPI_HOST`
+- `RAPIDAPI_URL`
+- `GEMINI_API_KEY`
+
+You can also manually trigger the workflow from the "Actions" tab in your GitHub repository.
 
 ---
 
 ## 🤝 Contributing
+
 Contributions are welcome! Please fork the repository and submit a pull request with your changes.
 
 ---
 
 ## 📜 License
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+
+This project is licensed under the MIT License.
 
 ---
 
 ## 📖 Acknowledgments
-- [Selenium Documentation](https://www.selenium.dev/documentation/)
+
 - [RapidAPI](https://rapidapi.com/)
+- [Google Gemini](https://gemini.google.com/)
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
-
-
-
