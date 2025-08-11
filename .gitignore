@@ -7,3 +7,9 @@ testfile.txt
 HandleCheckbox.py
 enable_disable_elements.py
 HandleModal.py
+HandleRadioButtons.py
+HandleSwitchWindow.py
+HandleAlert.py
+HandlePageScroll.py
+HandleDatePicker.py
+HandledropdownMenuButton.py
