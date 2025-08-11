@@ -1,8 +1,9 @@
-name: Daily Job Search
+name: Job Search Every 8 Hours
 
 on:
   schedule:
-    - cron: "30 6 * * *" # Runs at 12:00 PM IST (06:30 UTC)
+    # Runs every 8 hours at minute 0 (00:00, 08:00, 16:00 UTC)
+    - cron: "0 */8 * * *"
   workflow_dispatch: # allows manual run
 
 jobs:
