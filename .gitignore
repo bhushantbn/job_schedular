@@ -4,3 +4,6 @@ HandleFileUpload.py
 HandleForm.py
 latest_jobs.html
 testfile.txt
+HandleCheckbox.py
+enable_disable_elements.py
+HandleModal.py
