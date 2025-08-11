@@ -60,5 +60,4 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ## Acknowledgments
-- [Selenium Documentation](https://www.selenium.dev/documentation/)
 - [Python Official Website](https://www.python.org/)
