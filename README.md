@@ -1,6 +1,6 @@
 # Daily Job Search By Location
 
-This project automates the process of searching for **Senior Quality Analyst** jobs at top companies in **Location** and sends the results to your email daily at **12 noon TIME** using GitHub Actions.
+This project automates the process of searching for **Senior Quality Analyst** jobs at top companies in **Location** and sends the results to your email daily at **every 8 hours TIME** using GitHub Actions.
 
 ---
 
