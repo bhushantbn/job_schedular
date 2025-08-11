@@ -5,7 +5,7 @@ This project automates the process of searching for **Senior Quality Analyst** j
 ---
 
 ## 📌 Features
-- Automatically runs every day at 12 noon IST.
+- Automatically runs every day every 8 hours IST.
 - Searches for latest job postings using RapidAPI.
 - Sends results directly to your email.
 - Fully serverless — runs on GitHub Actions (no need to keep PC on).
