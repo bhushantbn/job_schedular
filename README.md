@@ -40,7 +40,7 @@ Before running the project, ensure you have the following installed:
 
 2. Run the script:
    ```bash
-   python main.py
+   python daily_job_search.py
    ```
 
 3. Follow the output in the terminal for progress and results.
@@ -49,12 +49,8 @@ Before running the project, ensure you have the following installed:
 ```
 SeleniumPython/
 │
-├── main.py               # Entry point for the project
-├── requirements.txt      # Python dependencies
-├── README.md             # Project documentation
-├── tests/                # Test scripts
-├── utils/                # Utility modules
-└── drivers/              # WebDriver executables (optional)
+├── daily_job_search.py    # Script for daily job search automation
+├── requirements.txt       # Python dependencies
 ```
 
 ## Contributing
