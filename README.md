@@ -1,4 +1,4 @@
-# Selenium Python Automation Scripts
+# Python Automation Schedular
 
 This repository contains a collection of Python scripts for various automation tasks, including daily job searches, interview question generation, and web browser interactions using Selenium.
 
