@@ -1,54 +1,95 @@
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from datetime import datetime
-from dotenv import load_dotenv
 import os
+import json
+import smtplib
 import google.generativeai as genai
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 import random
 
 # Load environment variables
-load_dotenv()
+EMAIL_SENDER = os.getenv("EMAIL_SENDER")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-EMAIL_SENDER = os.getenv('EMAIL_SENDER')
-EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
-EMAIL_RECEIVER = os.getenv('EMAIL_RECEIVER')
-SMTP_SERVER = 'smtp.gmail.com'
-SMTP_PORT = 465
-
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
-
-# Configure Gemini
+# Gemini setup
 genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel("gemini-pro")
 
-def generate_qa_from_gemini():
-    prompt = (
-        "Generate 10 UNIQUE and DIFFERENT interview questions and detailed answers "
-        "for a Senior Quality Analyst with 10 years of experience in manual and automation testing. "
-        "Avoid repeating previous questions. Make them practical and scenario-based. "
-        "Format as Q1:, A1:, Q2:, A2:, etc."
-    )
+HISTORY_FILE = "last_questions.json"
+MAX_HISTORY = 100  # Keep last 100 questions only
 
-    model = genai.GenerativeModel("gemini-1.5-flash")
-    response = model.generate_content(prompt)
-    return response.text.strip()
+
+def load_history():
+    if os.path.exists(HISTORY_FILE):
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+
+def save_history(history):
+    # Keep only last MAX_HISTORY entries
+    history = history[-MAX_HISTORY:]
+    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+        json.dump(history, f, ensure_ascii=False, indent=2)
+
+
+def generate_unique_questions(history):
+    history_questions = {q["question"] for q in history}
+    unique_qas = []
+
+    while len(unique_qas) < 10:
+        prompt = (
+            "Generate one unique senior-level software testing interview question "
+            "with its answer for a Senior Quality Analyst with 10 years experience "
+            "(manual + automation, ecommerce). Return in JSON: {question: '', answer: ''}."
+        )
+
+        try:
+            response = model.generate_content(prompt)
+            qa_text = response.text.strip()
+
+            qa = json.loads(qa_text)  # Expecting JSON output from Gemini
+
+            if qa["question"] not in history_questions:
+                unique_qas.append(qa)
+                history_questions.add(qa["question"])
+        except Exception as e:
+            print("Error generating question:", e)
+
+    return unique_qas
+
 
 def send_email(subject, body):
     msg = MIMEMultipart()
-    msg['From'] = EMAIL_SENDER
-    msg['To'] = EMAIL_RECEIVER
-    msg['Subject'] = subject
-    msg.attach(MIMEText(body, 'plain'))
+    msg["From"] = EMAIL_SENDER
+    msg["To"] = EMAIL_RECEIVER
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain"))
 
-    with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(EMAIL_SENDER, EMAIL_PASSWORD)
         server.send_message(msg)
 
+
 def main():
-    qa_content = generate_qa_from_gemini()
-    email_subject = f"Daily Senior QA Interview Q&A - {datetime.now().strftime('%Y-%m-%d')}"
-    send_email(email_subject, qa_content)
-    print("✅ Email sent with fresh interview questions!")
+    history = load_history()
+    new_qas = generate_unique_questions(history)
+
+    # Save updated history
+    save_history(history + new_qas)
+
+    # Prepare email body
+    body = "\n\n".join(
+        [f"Q: {qa['question']}\nA: {qa['answer']}" for qa in new_qas]
+    )
+
+    send_email(
+        subject="Daily Senior QA Interview Questions",
+        body=body
+    )
+    print("Email sent with 10 unique interview questions!")
+
 
 if __name__ == "__main__":
     main()
