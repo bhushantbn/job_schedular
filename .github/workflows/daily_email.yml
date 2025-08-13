@@ -1,8 +1,8 @@
-name: Daily Automation Python Email Schedular Every 6 Hours
+name: Daily Automation Python Email Scheduler Every 6 Hours
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 */6 * * *" # Runs every 6 hours
   workflow_dispatch:
 
 jobs:
@@ -16,10 +16,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.x"
+          python-version: "3.13" # Match your local version
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install google-generativeai  # Ensure Gemini API package is always installed
 
       - name: Run daily job search script
         env:
