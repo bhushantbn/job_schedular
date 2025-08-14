@@ -5,6 +5,7 @@ import google.generativeai as genai
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import random
+import datetime
 
 # Load environment variables
 EMAIL_SENDER = os.getenv("EMAIL_SENDER")
@@ -18,6 +19,39 @@ model = genai.GenerativeModel("gemini-1.5-pro")
 
 HISTORY_FILE = "last_questions.json"
 MAX_HISTORY = 100  # Keep last 100 questions only
+
+topics = [
+    "automation frameworks in e-commerce",
+    "Selenium WebDriver advanced techniques",
+    "API testing for e-commerce backends",
+    "performance testing under high load",
+    "security vulnerability assessment",
+    "accessibility compliance (WCAG)",
+    "mobile app testing for shopping apps",
+    "CI/CD integration for test automation",
+    "agile testing methodologies",
+    "defect management and triage",
+    "test planning and strategy",
+    "checkout process optimization",
+    "payment gateway integrations",
+    "search and recommendation engines",
+    "inventory management systems",
+    "user account security",
+    "cross-browser compatibility",
+    "data-driven testing approaches",
+    "behavior-driven development (BDD)",
+    "exploratory testing techniques",
+    "load and stress testing tools",
+    "cloud-based testing environments",
+    "AI in software testing",
+    "microservices testing in e-commerce",
+    "internationalization and localization testing",
+    "usability testing for user experience",
+    "regression testing strategies",
+    "test environment management",
+    "shift-left testing practices",
+    "containerization and testing (Docker/Kubernetes)"
+]
 
 
 def load_history():
@@ -43,7 +77,8 @@ def generate_unique_questions(history):
     while len(unique_qas) < 10 and attempts < max_attempts:
         attempts += 1
         num_to_generate = 10 - len(unique_qas) + 5  # Generate a few extra to account for potential duplicates
-        prompt = f"""Generate {num_to_generate} unique senior-level software testing interview questions with their answers for a Senior Quality Analyst with 10 years experience (manual + automation, ecommerce). Ensure they are diverse and not duplicates of each other. Return ONLY valid JSON format: an array of objects like [{{"question": "your question here", "answer": "your answer here"}}, ...]"""
+        selected_topics = random.sample(topics, min(num_to_generate, len(topics)))
+        prompt = f"""Generate one unique senior-level software testing interview question with its answer for each of the following topics for a Senior Quality Analyst with 10 years experience (manual + automation, ecommerce): {', '.join(selected_topics)}. Ensure they are diverse, original, and relevant to current trends as of {datetime.date.today()}. Return ONLY valid JSON format: an array of objects like [{{"question": "your question here", "answer": "your answer here"}}, ...]"""
 
         try:
             response = model.generate_content(prompt)
