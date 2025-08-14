@@ -14,7 +14,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Gemini setup - UPDATED MODEL NAME
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-pro")  # Changed from "gemini-pro"
+model = genai.GenerativeModel("gemini-1.5-pro")
 
 HISTORY_FILE = "last_questions.json"
 MAX_HISTORY = 100  # Keep last 100 questions only
