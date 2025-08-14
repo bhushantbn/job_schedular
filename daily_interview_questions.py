@@ -8,8 +8,6 @@ import random
 import datetime
 import hashlib
 
-from daily_job_search import send_email
-
 # Load environment variables
 EMAIL_SENDER = os.getenv("EMAIL_SENDER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
@@ -23,7 +21,20 @@ model = genai.GenerativeModel("gemini-1.5-pro")
 HISTORY_FILE = "last_questions.json"
 MAX_HISTORY = 200  # Keep last 200 questions
 
-# Your topics list remains the same...
+# Define topics list at module level
+TOPICS = [
+    "automation frameworks in e-commerce",
+    "Selenium WebDriver advanced techniques",
+    "API testing for e-commerce backends",
+    "performance testing under high load",
+    "security vulnerability assessment",
+    "accessibility compliance (WCAG)",
+    "mobile app testing for shopping apps",
+    "CI/CD integration for test automation",
+    "agile testing methodologies",
+    "defect management and triage",
+    # ... (add all your other topics here)
+]
 
 def get_question_hash(question):
     """Generate a consistent hash for each question"""
@@ -85,9 +96,9 @@ def generate_unique_questions(history):
         num_to_generate = 15  # Generate extra to account for duplicates
         
         # Select unused topics
-        available_topics = [t for t in topics if t not in used_topics]
+        available_topics = [t for t in TOPICS if t not in used_topics]
         if not available_topics:
-            available_topics = topics.copy()  # Reset if all topics used
+            available_topics = TOPICS.copy()  # Reset if all topics used
             used_topics = set()
             
         selected_topics = random.sample(available_topics, min(num_to_generate, len(available_topics)))
@@ -148,6 +159,22 @@ Return ONLY a valid JSON array of {{"question": "...", "answer": "..."}} objects
     
     return unique_qas[:10]
 
+def send_email(subject, body):
+    """Send email with proper parameter handling"""
+    try:
+        msg = MIMEMultipart()
+        msg["From"] = EMAIL_SENDER
+        msg["To"] = EMAIL_RECEIVER
+        msg["Subject"] = subject
+        msg.attach(MIMEText(body, "plain"))
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(EMAIL_SENDER, EMAIL_PASSWORD)
+            server.send_message(msg)
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Error sending email: {e}")
+
 def main():
     try:
         # Ensure history file exists
@@ -168,9 +195,8 @@ def main():
         # Prepare email
         email_body = "Today's QA Interview Questions\n" + "="*50 + "\n\n"
         email_body += "\n\n".join(
-            f"Q{i+1}: {qa['question']}\n\nA{i+1}: {qa['answer']}\n"
-            for i, qa in enumerate(new_qas)
-        )
+            f"Q{i+1}: {qa['question']}\n\nA{i+1}: {qa['answer']}\n" 
+            for i, qa in enumerate(new_qas))
         email_body += f"\nTotal in history: {len(updated_history)}"
 
         send_email(
