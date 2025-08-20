@@ -1,0 +1,42 @@
+[
+  {
+    "question": "What is an API?",
+    "answer": "An API (Application Programming Interface) acts as an interface that allows two software systems to communicate with each other."
+  },
+  {
+    "question": "What are the key characteristics of a RESTful system?",
+    "answer": "REST (Representational State Transfer) is an architectural style for designing networked applications. Key characteristics include a client-server model, statelessness, cacheability, a uniform interface, and a layered system."
+  },
+  {
+    "question": "What are the differences between REST and SOAP?",
+    "answer": "REST is generally more versatile and faster than SOAP, supporting various data formats like JSON and XML, while SOAP primarily uses XML. REST is often preferred for its simplicity and scalability."
+  },
+  {
+    "question": "What are the common HTTP methods used in REST APIs?",
+    "answer": "Commonly used HTTP methods include GET (retrieve), POST (create), PUT (update/replace), PATCH (partial update), and DELETE (remove)."
+  },
+  {
+    "question": "What is the difference between PUT and POST?",
+    "answer": "POST is used to create a new resource, while PUT is used to update an existing resource or create one if it doesn't exist."
+  },
+  {
+    "question": "What is idempotency in the context of REST APIs?",
+    "answer": "Idempotency means that making the same request multiple times will have the same effect as making it once. For example, a DELETE request is idempotent."
+  },
+  {
+    "question": "How would you handle API versioning?",
+    "answer": "Versioning is crucial for maintaining backward compatibility. Common strategies include including the version number in the URI (e.g., '/v1/users'), in a request header, or as a query parameter."
+  },
+  {
+    "question": "How do you secure an API?",
+    "answer": "Securing an API involves multiple layers, including implementing robust authentication and authorization, using HTTPS to encrypt data in transit, validating input to prevent attacks like SQL injection, and implementing rate limiting."
+  },
+  {
+    "question": "What are common authentication methods for APIs?",
+    "answer": "Common methods include API keys, OAuth 2.0 (often used for delegated access), and JSON Web Tokens (JWT) for token-based authentication."
+  },
+  {
+    "question": "What is the purpose of an API Gateway?",
+    "answer": "An API Gateway serves as a single entry point for all API requests, handling concerns like request routing, authentication, rate limiting, and logging."
+  }
+]

@@ -14,7 +14,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Gemini setup - UPDATED MODEL NAME
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-pro")
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 HISTORY_FILE = "last_questions.json"
 MAX_HISTORY = 100  # Keep last 100 questions only
@@ -43,7 +43,7 @@ def generate_unique_questions(history):
     while len(unique_qas) < 10 and attempts < max_attempts:
         attempts += 1
         num_to_generate = 10 - len(unique_qas) + 5  # Generate a few extra to account for potential duplicates
-        prompt = f"""Generate {num_to_generate} unique senior-level software testing interview questions with their answers for a Senior Quality Analyst with 10 years experience (manual + automation, ecommerce). Ensure they are diverse and not duplicates of each other. Return ONLY valid JSON format: an array of objects like [{{"question": "your question here", "answer": "your answer here"}}, ...]"""
+        prompt = f"""Generate {num_to_generate} unique senior-level software engineering interview questions with their answers. Ensure they are diverse and not duplicates of each other. Return ONLY valid JSON format: an array of objects like [{{"question": "your question here", "answer": "your answer here"}}, ...]"""
 
         try:
             response = model.generate_content(prompt)
@@ -83,44 +83,44 @@ def generate_unique_questions(history):
         # Fallback questions in case not enough generated
         fallback_qas = [
             {
-                "question": "Describe your approach to testing an e-commerce checkout process for both functional and non-functional requirements.",
-                "answer": "I would create a comprehensive test plan covering functional tests (payment processing, inventory updates, order confirmation), usability tests (user journey, accessibility), performance tests (load testing during peak times), security tests (payment data protection, SQL injection), and integration tests (third-party payment gateways, inventory systems)."
+                "question": "What is an API?",
+                "answer": "An API (Application Programming Interface) acts as an interface that allows two software systems to communicate with each other."
             },
             {
-                "question": "How would you implement automation testing for an e-commerce site's search functionality?",
-                "answer": "I would use Selenium or Cypress for UI automation, create test scripts to verify search results accuracy, relevance, filtering, and sorting. Integrate with CI/CD, use data-driven testing for various search queries, and include negative tests for no results or invalid inputs."
+                "question": "What are the key characteristics of a RESTful system?",
+                "answer": "REST (Representational State Transfer) is an architectural style for designing networked applications. Key characteristics include a client-server model, statelessness, cacheability, a uniform interface, and a layered system."
             },
             {
-                "question": "Explain your strategy for handling flaky tests in an automated test suite for e-commerce applications.",
-                "answer": "Identify flaky tests through repeated runs and logs. Implement retries with exponential backoff, use stable selectors, mock external dependencies, ensure environment consistency, and regularly review and refactor tests. Monitor flakiness metrics in CI pipeline."
+                "question": "What are the differences between REST and SOAP?",
+                "answer": "REST is generally more versatile and faster than SOAP, supporting various data formats like JSON and XML, while SOAP primarily uses XML. REST is often preferred for its simplicity and scalability."
             },
             {
-                "question": "Describe how you would test payment gateway integration in an e-commerce platform.",
-                "answer": "Use sandbox environments for payment providers. Test successful payments, failures, refunds, partial captures. Verify security (PCI compliance, tokenization), handle different card types, currencies, and edge cases like network failures or timeouts. Automate where possible, but include manual exploratory testing."
+                "question": "What are the common HTTP methods used in REST APIs?",
+                "answer": "Commonly used HTTP methods include GET (retrieve), POST (create), PUT (update/replace), PATCH (partial update), and DELETE (remove)."
             },
             {
-                "question": "How do you ensure accessibility in e-commerce website testing?",
-                "answer": "Follow WCAG guidelines, use tools like WAVE or axe for automated checks, perform manual testing with screen readers (NVDA, VoiceOver), test keyboard navigation, color contrast, alt texts, ARIA labels. Include users with disabilities in usability testing sessions."
+                "question": "What is the difference between PUT and POST?",
+                "answer": "POST is used to create a new resource, while PUT is used to update an existing resource or create one if it doesn't exist."
             },
             {
-                "question": "What metrics would you track for quality assurance in an e-commerce project?",
-                "answer": "Defect density, test coverage (code, requirements), mean time to detect/resolve defects, automation ROI, customer-reported issues, performance metrics (load time, throughput), conversion rates, and post-release defect escape rate."
+                "question": "What is idempotency in the context of REST APIs?",
+                "answer": "Idempotency means that making the same request multiple times will have the same effect as making it once. For example, a DELETE request is idempotent."
             },
             {
-                "question": "How would you approach API testing for an e-commerce backend?",
-                "answer": "Use Postman or RestAssured for automation. Test endpoints for CRUD operations, authentication, rate limiting. Validate schemas, error handling, pagination. Perform security tests (injection, auth bypass), load tests, and contract testing if microservices are involved."
+                "question": "How would you handle API versioning?",
+                "answer": "Versioning is crucial for maintaining backward compatibility. Common strategies include including the version number in the URI (e.g., '/v1/users'), in a request header, or as a query parameter."
             },
             {
-                "question": "Describe your experience with shift-left testing in agile e-commerce development.",
-                "answer": "Involve QA early in requirements gathering, pair with developers for TDD/BDD, implement continuous testing in CI/CD, use feature flags for testing in production-like environments, and conduct exploratory testing during sprints to catch issues early."
+                "question": "How do you secure an API?",
+                "answer": "Securing an API involves multiple layers, including implementing robust authentication and authorization, using HTTPS to encrypt data in transit, validating input to prevent attacks like SQL injection, and implementing rate limiting."
             },
             {
-                "question": "How do you handle cross-browser testing for e-commerce sites?",
-                "answer": "Use BrowserStack or Sauce Labs for cloud-based testing. Prioritize browsers based on user analytics (Chrome, Firefox, Safari, Edge). Automate core flows across browsers, check for layout issues, JavaScript compatibility, and performance differences."
+                "question": "What are common authentication methods for APIs?",
+                "answer": "Common methods include API keys, OAuth 2.0 (often used for delegated access), and JSON Web Tokens (JWT) for token-based authentication."
             },
             {
-                "question": "What is your approach to mobile testing for e-commerce apps?",
-                "answer": "Test on real devices and emulators (Appium for automation). Cover iOS and Android, different screen sizes, orientations. Test touch gestures, offline mode, push notifications, app store compliance. Include performance (battery, memory) and interruption testing (calls, low battery)."
+                "question": "What is the purpose of an API Gateway?",
+                "answer": "An API Gateway serves as a single entry point for all API requests, handling concerns like request routing, authentication, rate limiting, and logging."
             }
         ]
         # Add fallbacks until we reach 10, avoiding duplicates
@@ -163,7 +163,7 @@ def main():
         save_history(history + new_qas)
 
         # Prepare email body
-        body = "Daily Senior QA Interview Questions\n" + "="*50 + "\n\n"
+        body = "Daily Software Engineering Interview Questions\n" + "="*50 + "\n\n"
         body += "\n\n".join([
             f"Q{i+1}: {qa['question']}\n\nA{i+1}: {qa['answer']}" 
             for i, qa in enumerate(new_qas)
@@ -172,7 +172,7 @@ def main():
         body += f"\nTotal questions in history: {len(history) + len(new_qas)}"
 
         send_email(
-            subject="Daily Senior QA Interview Questions",
+            subject="Daily Software Engineering Interview Questions",
             body=body
         )
         print("Process completed successfully!")
@@ -182,7 +182,7 @@ def main():
         # Send error notification email
         try:
             send_email(
-                subject="Daily QA Questions - Error Occurred",
+                subject="Daily SWE Questions - Error Occurred",
                 body=f"An error occurred while generating daily questions:\n\n{str(e)}"
             )
         except:
